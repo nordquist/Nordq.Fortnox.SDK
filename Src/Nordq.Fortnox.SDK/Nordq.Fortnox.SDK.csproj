@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Marcus Nordquist</Authors>
+    <Description>A Fortnox SDK with documented exposed public methods, support for async.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="8.0.3" />
+  </ItemGroup>
+
+</Project>
