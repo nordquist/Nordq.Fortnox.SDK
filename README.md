@@ -5,8 +5,6 @@ A small and simple connector for Swedish economy system Fortnox in .NET Standard
 
 The MIT License (MIT)
 
-Copyright (c) 2017 Fortnox AB, Jesper Svensson
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
