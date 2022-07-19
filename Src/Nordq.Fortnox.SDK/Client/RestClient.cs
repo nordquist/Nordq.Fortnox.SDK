@@ -12,12 +12,14 @@ namespace Nordq.Fortnox.SDK.Client
         private readonly ApiHttpSettings _settings;
         private readonly string _clientSecret;
         private readonly string _accessToken;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         internal RestClient(ApiHttpSettings settings, string clientSecret, string accessToken)
         {
             _settings = settings;
             _clientSecret = clientSecret;
             _accessToken = accessToken;
+            _jsonSerializerSettings = new JsonSerializerSettings {MaxDepth = 128};
         }
 
         internal async Task<T> GetAsync<T>(string path, int limit = 500, int? page = null)
@@ -39,7 +41,7 @@ namespace Nordq.Fortnox.SDK.Client
                     throw new FortnoxHttpException($"[HttpGet] Call to '{uri}' was unsuccessful, details: '{restResponse.ReasonPhrase}'", typeof(T));
 
                 var body = await restResponse.Content.ReadAsStringAsync();
-                var deserializedResponse = JsonConvert.DeserializeObject<T>(body);
+                var deserializedResponse = JsonConvert.DeserializeObject<T>(body, _jsonSerializerSettings);
                 return deserializedResponse;
             }
         }
@@ -54,14 +56,14 @@ namespace Nordq.Fortnox.SDK.Client
                 client.DefaultRequestHeaders.Add("Access-Token", _accessToken);
                 client.DefaultRequestHeaders.Add("Client-Secret", _clientSecret);
 
-                var json = JsonConvert.SerializeObject(model);
+                var json = JsonConvert.SerializeObject(model, _jsonSerializerSettings);
                 var restResponse = await client.PostAsync(uri, new StringContent(json, Encoding.UTF8, _settings.ContentType));
 
                 if (!restResponse.IsSuccessStatusCode)
                     throw new FortnoxHttpException($"[HttpPost] Call to '{uri}' was unsuccessful, details: '{restResponse.ReasonPhrase}'", typeof(T));
 
                 var body = await restResponse.Content.ReadAsStringAsync();
-                var deserializedResponse = JsonConvert.DeserializeObject<TR>(body);
+                var deserializedResponse = JsonConvert.DeserializeObject<TR>(body, _jsonSerializerSettings);
                 return deserializedResponse;
             }
         }
@@ -76,7 +78,7 @@ namespace Nordq.Fortnox.SDK.Client
                 client.DefaultRequestHeaders.Add("Access-Token", _accessToken);
                 client.DefaultRequestHeaders.Add("Client-Secret", _clientSecret);
 
-                var json = JsonConvert.SerializeObject(model);
+                var json = JsonConvert.SerializeObject(model, _jsonSerializerSettings);
                 var restResponse = await client.PostAsync(uri, new StringContent(json, Encoding.UTF8, _settings.ContentType));
 
                 if (!restResponse.IsSuccessStatusCode)
@@ -103,7 +105,7 @@ namespace Nordq.Fortnox.SDK.Client
                     throw new FortnoxHttpException($"[HttpPost] Call to '{uri}' was unsuccessful, details: '{restResponse.ReasonPhrase}'", typeof(T));
 
                 var body = await restResponse.Content.ReadAsStringAsync();
-                var deserializedResponse = JsonConvert.DeserializeObject<TR>(body);
+                var deserializedResponse = JsonConvert.DeserializeObject<TR>(body, _jsonSerializerSettings);
                 return deserializedResponse;
             }
         }
@@ -118,7 +120,7 @@ namespace Nordq.Fortnox.SDK.Client
                 client.DefaultRequestHeaders.Add("Access-Token", _accessToken);
                 client.DefaultRequestHeaders.Add("Client-Secret", _clientSecret);
 
-                var json = JsonConvert.SerializeObject(model);
+                var json = JsonConvert.SerializeObject(model, _jsonSerializerSettings);
                 var restResponse = await client.PostAsync(uri, new StringContent(json, Encoding.UTF8, _settings.ContentType));
 
                 if (!restResponse.IsSuccessStatusCode)
