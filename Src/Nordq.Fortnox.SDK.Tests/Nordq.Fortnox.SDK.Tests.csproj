@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FortnoxConnector\Nordq.Fortnox.SDK.csproj" />
+    <ProjectReference Include="..\Nordq.Fortnox.SDK\Nordq.Fortnox.SDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>
